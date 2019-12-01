@@ -1,4 +1,4 @@
-# riveter (v0.2.0)
+# riveter (v0.2.1)
 
 [![Build Status](https://travis-ci.org/Foo-Foo-MQ/riveter.svg?branch=master)](https://travis-ci.org/Foo-Foo-MQ/riveter)
 [![Coverage Status](https://coveralls.io/repos/github/Foo-Foo-MQ/riveter/badge.svg?branch=master)](https://coveralls.io/github/Foo-Foo-MQ/riveter?branch=master)
@@ -13,6 +13,10 @@ node-riveter is an experimental JavaScript micro-library (based on [riveter](htt
 - `riveter.extend` - helper method which can be attached to a constructor function. It wraps the `inherits` call, providing the constructor to which it is attached as the `parent` argument. (Must be attached to a constructor function to operate.)
 - `riveter.punch` - works like `mixin`, but mixin methods _will override the target prototype_ if they already exist.
 - `riveter.rivet` - Adds the `mixin`, `extend`, `compose`, `inherits` and `punch` calls to a constructor function if they are not already present. While you can call `riveter.rivet`, a short cut is provided by simply calling `riveter()` and passing 1-to-n constructor functions as arguments, each of which will have the methods applied.
+
+### What is different between node-riveter and [riveter](https://github.com/a2labs/riveter)?
+
+Well the main difference is this is a **node only** implementation
 
 ### Why would I use it?
 
