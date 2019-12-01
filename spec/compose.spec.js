@@ -66,10 +66,7 @@ describe('riveter - constructor.compose', function () {
       this.name = val
     }
     riveter(F)
-    var F2 = F.compose(
-      mixinA,
-      mixinC
-    )
+    var F2 = F.compose(mixinA, mixinC)
     var f2 = new F2('Who')
 
     it('should apply compose methods to the instance', function () {
@@ -168,10 +165,7 @@ describe('riveter - constructor.compose', function () {
       this.name = val
     }
     riveter(F)
-    var F2 = F.compose(
-      mixinB,
-      mixinD
-    )
+    var F2 = F.compose(mixinB, mixinD)
     var f2 = new F2('Who')
     it('should apply mixin method to the instance', function () {
       expect(f2).to.have.property('saySomething')
