@@ -1,8 +1,11 @@
 # riveter (v0.2.0)
 
+[![Build Status](https://travis-ci.org/Foo-Foo-MQ/riveter.svg?branch=master)](https://travis-ci.org/Foo-Foo-MQ/riveter)
+[![Coverage Status](https://coveralls.io/repos/github/Foo-Foo-MQ/riveter/badge.svg?branch=master)](https://coveralls.io/github/Foo-Foo-MQ/riveter?branch=master)
+
 ### What is it?
 
-riveter is an experimental JavaScript micro-library that provides the following helper methods:
+node-riveter is an experimental JavaScript micro-library (based on [riveter](https://github.com/a2labs/riveter)) that provides the following helper methods:
 
 - `riveter.mixin` - use this to mix object literals into the target constructor function's prototype. Mixin methods are only copied to the prototype if they do not already exist on the prototype (so it preserves/prefers existing prototype implementations). (Can be used stand-alone via `riveter.mixin` or it can be attached to a constructor function.)
 - `riveter.compose` - like `mixin`, you use this to mix objects which provide additional behavior into your constructor function - however, all of the mixins passed to `compose` are inserted into the target constructor's prototype chain, on the 'parent' prototype. Composed mix-ins may optionally provide initialization methods that can be called before or after the original constructor function executes. (Can be used stand-alone via `riveter.compose` or it can be attached to a constructor function.)
@@ -272,10 +275,7 @@ riveter is currently an 'appendTo Labs' effort. This means that we're excited ab
 
 ### Building & Running Tests
 
-riveter uses [gulp.js](http://gulpjs.com/) to build.
-
 - Install node.js (and consider using [nvm](https://github.com/creationix/nvm) to manage your node versions)
 - run `npm install` to install all dependencies
-- To build, run `npm run build` - then check the lib folder for the output
 - To run tests & examples:
   - To run node-based tests: `npm run test`
