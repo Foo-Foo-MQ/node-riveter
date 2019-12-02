@@ -1,4 +1,4 @@
-# riveter (v0.2.1)
+# riveter (v0.3.0)
 
 [![Build Status](https://travis-ci.org/Foo-Foo-MQ/riveter.svg?branch=master)](https://travis-ci.org/Foo-Foo-MQ/riveter)
 [![Coverage Status](https://coveralls.io/repos/github/Foo-Foo-MQ/riveter/badge.svg?branch=master)](https://coveralls.io/github/Foo-Foo-MQ/riveter?branch=master)
