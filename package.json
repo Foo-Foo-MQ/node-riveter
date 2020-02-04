@@ -2,10 +2,10 @@
   "name": "node-riveter",
   "description": "Mix-in, inheritance and constructor extend behavior for your JavaScript enjoyment.",
   "version": "0.3.0",
-  "homepage": "https://github.com/zlintz/riveter",
+  "homepage": "https://github.com/foo-foo-mq/node-riveter",
   "repository": {
     "type": "git",
-    "url": "git://github.com/zlintz/riveter.git"
+    "url": "git://github.com/foo-foo-mq/node-riveter.git"
   },
   "author": "Zach Lintz, original implemenation thanks to appendTo, LLC (http://appendTo.com)",
   "contributors": [
@@ -34,7 +34,7 @@
   ],
   "bugs": {
     "email": "PleaseJustUseTheIssuesPage@github.com",
-    "url": "http://github.com/zlintz/riveter/issues"
+    "url": "http://github.com/foo-foo-mq/node-riveter/issues"
   },
   "directories": {
     "lib": "lib"

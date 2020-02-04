@@ -1,7 +1,17 @@
-# riveter (v0.3.0)
+# node-riveter (v0.3.0)
 
 [![Build Status](https://travis-ci.org/Foo-Foo-MQ/riveter.svg?branch=master)](https://travis-ci.org/Foo-Foo-MQ/riveter)
 [![Coverage Status](https://coveralls.io/repos/github/Foo-Foo-MQ/riveter/badge.svg?branch=master)](https://coveralls.io/github/Foo-Foo-MQ/riveter?branch=master)
+
+### Installation
+
+```
+npm i node-riveter
+```
+
+```
+const riveter = require('node-riveter')
+```
 
 ### What is it?
 
