@@ -1,4 +1,4 @@
-# node-riveter (v0.3.0)
+# node-riveter
 
 [![Build Status](https://travis-ci.org/Foo-Foo-MQ/node-riveter.svg?branch=master)](https://travis-ci.org/Foo-Foo-MQ/node-riveter)
 [![Coverage Status](https://coveralls.io/repos/github/Foo-Foo-MQ/node-riveter/badge.svg?branch=master)](https://coveralls.io/github/Foo-Foo-MQ/node-riveter?branch=master)
