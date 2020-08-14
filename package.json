@@ -1,7 +1,7 @@
 {
   "name": "node-riveter",
   "description": "Mix-in, inheritance and constructor extend behavior for your JavaScript enjoyment.",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "homepage": "https://github.com/foo-foo-mq/node-riveter",
   "repository": {
     "type": "git",
