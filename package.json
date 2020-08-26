@@ -77,10 +77,12 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "coverage": "nyc --exclude=**/*.spec.js --reporter=lcov npm run test ",
+    "pretest": "npm run build",
     "test": "mocha ./spec/*.js",
     "test:watch": "npm run test -- --watch",
     "precommit": "lint-staged",
-    "lint": "prettier-standard --lint"
+    "lint": "prettier-standard --check",
+    "lint:fix": "prettier-standard --lint"
   },
   "lint-staged": {
     "linters": {
