@@ -35,7 +35,7 @@ function getHandlerName(val: any) {
 
 export function deepExtend(obj: any, ...args: any[]) {
   _.each(Array.prototype.slice.call(arguments, 2), function (source: any) {
-    _.each(source, function (sourcePropVal: any, sourcePropKey: any) {
+    _.each(source, function (sourcePropVal: any, sourcePropKey: string) {
       behavior[getHandlerName(sourcePropVal)](obj, sourcePropKey, sourcePropVal)
     })
   })
