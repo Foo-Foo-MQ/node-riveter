@@ -1,6 +1,6 @@
 /* global describe it beforeEach afterEach */
 
-const riveter = require('../lib/riveter')
+const riveter = require('../dist/riveter')
 const expect = require('expect.js')
 
 describe('riveter - constructor.inherits', function () {

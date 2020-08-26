@@ -1,5 +1,5 @@
 /* global describe it beforeEach */
-const riveter = require('../lib/riveter')
+const riveter = require('../dist/riveter')
 const expect = require('expect.js')
 const _ = require('lodash')
 

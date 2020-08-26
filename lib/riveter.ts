@@ -85,7 +85,7 @@ function riveterImpl() {
         constructor: Child
       })
     }
-    (Child as any).__super = parent
+    (Child as any).__super = parent;
     // Next line is all about Backbone compatibility
     (Child as any).__super__ = parent.prototype
     return Child
@@ -155,4 +155,4 @@ function riveterImpl() {
   return riveter
 }
 
-module.exports = riveterImpl();
+export = riveterImpl();

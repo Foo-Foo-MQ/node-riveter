@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * node-riveter - Mix-in, inheritance and constructor extend behavior for your JavaScript enjoyment.
  * © 2012 - Copyright appendTo, LLC
@@ -83,7 +82,9 @@ function riveterImpl() {
                 constructor: Child
             });
         }
-        Child.__super = parent(Child).__super__ = parent.prototype;
+        Child.__super = parent;
+        // Next line is all about Backbone compatibility
+        Child.__super__ = parent.prototype;
         return Child;
     };
     riveter.extend = function (ctor, props, ctorProps, options) {
