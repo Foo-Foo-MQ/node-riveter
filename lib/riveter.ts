@@ -13,6 +13,9 @@ import { deepExtend } from './utils'
 const slice = Array.prototype.slice
 
 class Riveter {
+  constructor(...args: any[]) {
+    args.forEach(Riveter.rivet); // target es5 required for constructor to be allowed to be called without the "new" keyword
+  }
 
   public static rivet(fn: any) {
     if (!Object.prototype.hasOwnProperty.call(fn, 'extend')) {
@@ -147,10 +150,4 @@ class Riveter {
   }
 }
 
-function riveterImpl() {
-  return (...args: any[]) => {
-    args.forEach(Riveter.rivet);
-  }
-}
-
-export = riveterImpl();
+export = Riveter;
