@@ -17,6 +17,10 @@ class Riveter {
     args.forEach(Riveter.rivet); // target es5 required for constructor to be allowed to be called without the "new" keyword
   }
 
+  public static init(...args: any[]): Riveter {
+    return new Riveter(...args);
+  }
+
   public static rivet(fn: any) {
     if (!Object.prototype.hasOwnProperty.call(fn, 'extend')) {
       fn.extend = function (props: any, ctorProps: any, options: any) {
@@ -91,8 +95,7 @@ class Riveter {
     return Riveter.inherits(props, ctor, ctorProps, options)
   }
 
-  public static compose() {
-    const args = slice.call(arguments, 0)
+  public static compose(...args: any[]) {
     const ctor = args.shift()
     Riveter.rivet(ctor)
     const mixin = _.reduce(
@@ -132,16 +135,14 @@ class Riveter {
     return res
   }
 
-  public static mixin() {
-    const args = slice.call(arguments, 0)
+  public static mixin(...args: any[]) {
     const ctor = args.shift()
     Riveter.rivet(ctor)
     _.defaults(ctor.prototype, _.extend.apply(null, ([{}] as any).concat(args)))
     return ctor
   }
 
-  public static punch() {
-    const args = slice.call(arguments, 0)
+  public static punch(...args: any[]) {
     const ctor = args.shift()
     Riveter.rivet(ctor)
     _.extend(ctor.prototype, _.extend.apply(null, ([{}] as any).concat(args)))

@@ -67,6 +67,8 @@
     "typescript": "^3.9.7"
   },
   "devDependencies": {
+    "@types/expect.js": "^0.3.29",
+    "@types/mocha": "^8.0.3",
     "@types/lodash": "^4.14.159",
     "coveralls": "^3.1.0",
     "expect.js": "~0.3.1",
@@ -79,6 +81,7 @@
     "coverage": "nyc --exclude=**/*.spec.js --reporter=lcov npm run test ",
     "pretest": "npm run build",
     "test": "mocha ./spec/*.js",
+    "test:ts": "mocha ./spec/*.ts",
     "test:watch": "npm run test -- --watch",
     "precommit": "lint-staged",
     "lint": "prettier-standard --check",
