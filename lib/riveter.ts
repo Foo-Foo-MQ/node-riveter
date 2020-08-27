@@ -15,33 +15,32 @@ const slice = Array.prototype.slice
 class Riveter {
 
   public rivet(fn: any) {
-    const myself = this;
     if (!Object.prototype.hasOwnProperty.call(fn, 'extend')) {
-      fn.extend = function (props: any, ctorProps: any, options: any) {
+      fn.extend = (props: any, ctorProps: any, options: any) => {
         return this.extend(fn, props, ctorProps, options)
       }
     }
     if (!Object.prototype.hasOwnProperty.call(fn, 'compose')) {
-      fn.compose = function () {
-        return myself.compose.apply(
-          this,
-          [fn].concat(slice.call(arguments, 0)) as any
+      fn.compose = () => {
+        return this.compose.apply(
+            this,
+            [fn].concat(slice.call(arguments, 0)) as any
         )
       }
     }
     if (!Object.prototype.hasOwnProperty.call(fn, 'inherits')) {
-      fn.inherits = function (parent: any, ctorProps: any, options: any) {
-        return myself.inherits(fn, parent, ctorProps, options)
+      fn.inherits = (parent: any, ctorProps: any, options: any) => {
+        return this.inherits(fn, parent, ctorProps, options)
       }
     }
     if (!Object.prototype.hasOwnProperty.call(fn, 'mixin')) {
-      fn.mixin = function () {
-        return myself.mixin.apply(this, [fn].concat(slice.call(arguments, 0)) as any)
+      fn.mixin = () => {
+        return this.mixin.apply(this, [fn].concat(slice.call(arguments, 0)) as any)
       }
     }
     if (!Object.prototype.hasOwnProperty.call(fn, 'punch')) {
-      fn.punch = function () {
-        return myself.punch.apply(this, [fn].concat(slice.call(arguments, 0)) as any)
+      fn.punch = () => {
+        return this.punch.apply(this, [fn].concat(slice.call(arguments, 0)) as any)
       }
     }
   }
@@ -95,23 +94,23 @@ class Riveter {
     const ctor = args.shift()
     this.rivet(ctor)
     const mixin = _.reduce(
-      args,
-      function (memo, val) {
-        if (Object.prototype.hasOwnProperty.call(val, '_preInit')) {
-          memo.preInit.push(val._preInit as never)
+        args,
+        function (memo, val) {
+          if (Object.prototype.hasOwnProperty.call(val, '_preInit')) {
+            memo.preInit.push(val._preInit as never)
+          }
+          if (Object.prototype.hasOwnProperty.call(val, '_postInit')) {
+            memo.postInit.push(val._postInit as never)
+          }
+          val = val.mixin || val
+          memo.items.push(val as never)
+          return memo
+        },
+        {
+          items: [],
+          preInit: [],
+          postInit: []
         }
-        if (Object.prototype.hasOwnProperty.call(val, '_postInit')) {
-          memo.postInit.push(val._postInit as never)
-        }
-        val = val.mixin || val
-        memo.items.push(val as never)
-        return memo
-      },
-      {
-        items: [],
-        preInit: [],
-        postInit: []
-      }
     )
     const res = ctor.extend({
       constructor: function () {
@@ -149,9 +148,9 @@ class Riveter {
 }
 
 function riveterImpl() {
-  const r = new Riveter();
-  return function(...args: any[]) {
-    args.forEach(r.rivet);
+  const riveter = new Riveter();
+  return (...args: any[]) => {
+    args.forEach(riveter.rivet);
   }
 }
 
