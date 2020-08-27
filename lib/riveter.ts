@@ -12,23 +12,18 @@ import { deepExtend } from './utils'
 
 const slice = Array.prototype.slice
 
-function riveterImpl() {
-  const riveter = function () {
-    const args = slice.call(arguments, 0)
-    while (args.length) {
-      riveter.rivet(args.shift())
-    }
-  }
+class Riveter {
 
-  riveter.rivet = function (fn: any) {
+  public rivet(fn: any) {
+    const myself = this;
     if (!Object.prototype.hasOwnProperty.call(fn, 'extend')) {
       fn.extend = function (props: any, ctorProps: any, options: any) {
-        return riveter.extend(fn, props, ctorProps, options)
+        return this.extend(fn, props, ctorProps, options)
       }
     }
     if (!Object.prototype.hasOwnProperty.call(fn, 'compose')) {
       fn.compose = function () {
-        return riveter.compose.apply(
+        return myself.compose.apply(
           this,
           [fn].concat(slice.call(arguments, 0)) as any
         )
@@ -36,28 +31,28 @@ function riveterImpl() {
     }
     if (!Object.prototype.hasOwnProperty.call(fn, 'inherits')) {
       fn.inherits = function (parent: any, ctorProps: any, options: any) {
-        return riveter.inherits(fn, parent, ctorProps, options)
+        return myself.inherits(fn, parent, ctorProps, options)
       }
     }
     if (!Object.prototype.hasOwnProperty.call(fn, 'mixin')) {
       fn.mixin = function () {
-        return riveter.mixin.apply(this, [fn].concat(slice.call(arguments, 0)) as any)
+        return myself.mixin.apply(this, [fn].concat(slice.call(arguments, 0)) as any)
       }
     }
     if (!Object.prototype.hasOwnProperty.call(fn, 'punch')) {
       fn.punch = function () {
-        return riveter.punch.apply(this, [fn].concat(slice.call(arguments, 0)) as any)
+        return myself.punch.apply(this, [fn].concat(slice.call(arguments, 0)) as any)
       }
     }
   }
 
-  riveter.inherits = function (child: any, parent: any, ctorProps: any, options: any) {
+  public inherits(child: any, parent: any, ctorProps: any, options: any) {
     options = options || {}
     let childProto
     const TmpCtor = function () { }
-    let Child = function (this: { constructor: () => void }) {
+    let Child = function (self: { constructor: () => void }) {
       //tslint:disable:no-shadowed-variable
-      parent.apply(this as any, arguments)
+      parent.apply(self as any, arguments)
     }
     if (typeof child === 'object') {
       if (Object.prototype.hasOwnProperty.call(child, 'constructor')) {
@@ -68,7 +63,7 @@ function riveterImpl() {
       Child = child
       childProto = child.prototype
     }
-    riveter.rivet(Child)
+    this.rivet(Child)
     if (options.deep) {
       deepExtend(Child, parent, ctorProps)
     } else {
@@ -91,14 +86,14 @@ function riveterImpl() {
     return Child
   }
 
-  riveter.extend = function (ctor: any, props: any, ctorProps: any, options: any) {
-    return riveter.inherits(props, ctor, ctorProps, options)
+  public extend(ctor: any, props: any, ctorProps: any, options: any) {
+    return this.inherits(props, ctor, ctorProps, options)
   }
 
-  riveter.compose = function () {
+  public compose() {
     const args = slice.call(arguments, 0)
     const ctor = args.shift()
-    riveter.rivet(ctor)
+    this.rivet(ctor)
     const mixin = _.reduce(
       args,
       function (memo, val) {
@@ -131,28 +126,33 @@ function riveterImpl() {
         })
       }
     })
-    riveter.rivet(res)
+    this.rivet(res)
     _.defaults(res.prototype, _.extend.apply(null, ([{}] as any).concat(mixin.items)))
     return res
   }
 
-  riveter.mixin = function () {
+  public mixin() {
     const args = slice.call(arguments, 0)
     const ctor = args.shift()
-    riveter.rivet(ctor)
+    this.rivet(ctor)
     _.defaults(ctor.prototype, _.extend.apply(null, ([{}] as any).concat(args)))
     return ctor
   }
 
-  riveter.punch = function () {
+  public punch() {
     const args = slice.call(arguments, 0)
     const ctor = args.shift()
-    riveter.rivet(ctor)
+    this.rivet(ctor)
     _.extend(ctor.prototype, _.extend.apply(null, ([{}] as any).concat(args)))
     return ctor
   }
+}
 
-  return riveter
+function riveterImpl() {
+  const r = new Riveter();
+  return function(...args: any[]) {
+    args.forEach(r.rivet);
+  }
 }
 
 export = riveterImpl();

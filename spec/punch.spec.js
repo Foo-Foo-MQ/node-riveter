@@ -38,7 +38,7 @@ describe('riveter - constructor.punch', function () {
       expect(f2.greet()).to.be('Oh, hai Who')
     })
 
-    it('should apply shared/constructor methods', function () {
+    it.only('should apply shared/constructor methods', function () {
       expect(Object.prototype.hasOwnProperty.call(F2, 'mixin')).to.be(true)
       expect(Object.prototype.hasOwnProperty.call(F2, 'extend')).to.be(true)
       expect(Object.prototype.hasOwnProperty.call(F2, 'inherits')).to.be(true)
