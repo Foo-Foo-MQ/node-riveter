@@ -52,9 +52,8 @@ class Riveter {
     options = options || {}
     let childProto
     const TmpCtor = function () { }
-    let Child = function (self: { constructor: () => void }) {
-      //tslint:disable:no-shadowed-variable
-      parent.apply(self as any, arguments)
+    let Child = function (this: any) {
+      (parent as any).apply(this, arguments);
     }
     if (typeof child === 'object') {
       if (Object.prototype.hasOwnProperty.call(child, 'constructor')) {
