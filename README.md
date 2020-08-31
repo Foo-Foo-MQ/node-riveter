@@ -285,7 +285,17 @@ The `punch` call takes 1-to-n number of object literals, each containing methods
 
 ### Caveats
 
-riveter is currently an 'appendTo Labs' effort. This means that we're excited about it enough to make it a micro-library - and we invite you to try it out with us and give us your feedback. However, being that it's experimental, we may also decide it's the worst idea since the 8-track cassette player. As long as it continues to prove promising, it stands the chance of becoming a more 'officially supported' appendTo project. In short - we may pull the plug or change the name at any moment.
+node-riveter is a node only fork of riveter.
+It is currently maintained as it is a dependency of foo-foo-mq.
+However, it may disappear at any time if it is no longer needed by foo-foo-mq.
+
+appendTo Labs has stated similar caveats with the upstream of this project.
+See their original message below:
+
+> riveter is currently an 'appendTo Labs' effort. This means that we're excited about it enough to make it a micro-library - and we invite you to try it out with us and give us your feedback.
+> However, being that it's experimental, we may also decide it's the worst idea since the 8-track cassette player.
+> As long as it continues to prove promising, it stands the chance of becoming a more 'officially supported' appendTo project.
+> In short - we may pull the plug or change the name at any moment.
 
 ### Building & Running Tests
 
