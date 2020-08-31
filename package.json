@@ -7,8 +7,25 @@
     "type": "git",
     "url": "git://github.com/foo-foo-mq/node-riveter.git"
   },
-  "author": "Zach Lintz, original implemenation thanks to appendTo, LLC (http://appendTo.com)",
+  "author": {
+    "name": "Foo-Foo-MQ Team",
+    "email": "def@foofoomq.com"
+  },
   "contributors": [
+    {
+      "name": "Zach Lintz",
+      "email": "zlintz@foofoomq.com",
+      "url": "http://github.com/zlintz"
+    },
+    {
+      "name": "Parker Johansen",
+      "email": "auroq@foofoomq.com",
+      "url": "http://github.com/auroq"
+    },
+    {
+      "name": "appendTo, LLC",
+      "url": "http://appendTo.com"
+    },
     {
       "name": "Jim Cowart",
       "email": "WhyNotJustComment@OnMyBlog.com",
