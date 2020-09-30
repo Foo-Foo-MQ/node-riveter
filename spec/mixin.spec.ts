@@ -5,20 +5,20 @@ import expect = require('expect.js');
 
 describe('riveter - constructor.mixin', function () {
   const mixinA = {
-    greet: function () {
-      return 'Oh, hai ' + (this as any).name
+    greet: function(this: any) {
+      return 'Oh, hai ' + this.name
     }
   }
 
   const mixinB = {
-    greet: function () {
-      return 'BOO! ' + (this as any).name
+    greet: function(this: any) {
+      return 'BOO! ' + this.name
     }
   }
 
   const mixinC = {
-    sayGoodbye: function () {
-      return 'Buh Bye ' + (this as any).name
+    sayGoodbye: function(this: any) {
+      return 'Buh Bye ' + this.name
     }
   }
 
