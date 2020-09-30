@@ -1,6 +1,7 @@
 /* global describe it */
 
-import Riveter = require("../lib/riveter");
+import Riveter from '../lib/riveter'
+import expect = require('expect.js');
 
 describe('riveter - constructor.punch', function () {
   let mixinA = {

@@ -81,7 +81,7 @@
     "coverage": "nyc --exclude=**/*.spec.js --reporter=lcov npm run test ",
     "pretest": "npm run build",
     "test": "mocha ./spec/*.js",
-    "test:ts": "mocha ./spec/*.ts",
+    "test:ts": "mocha -r ts-node/register ./spec/*.ts",
     "test:watch": "npm run test -- --watch",
     "precommit": "lint-staged",
     "lint": "prettier-standard --check",
