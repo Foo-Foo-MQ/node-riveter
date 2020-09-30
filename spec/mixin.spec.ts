@@ -3,32 +3,32 @@
 import Riveter from '../lib/riveter'
 import expect = require('expect.js');
 
-describe('riveter - constructor.punch', function () {
-  let mixinA = {
-    greet: function(): string {
+describe('riveter - constructor.mixin', function () {
+  const mixinA = {
+    greet: function () {
       return 'Oh, hai ' + (this as any).name
     }
   }
 
-  let mixinB = {
-    greet: function(): string {
+  const mixinB = {
+    greet: function () {
       return 'BOO! ' + (this as any).name
     }
   }
 
-  let mixinC = {
-    sayGoodbye: function(): string {
+  const mixinC = {
+    sayGoodbye: function () {
       return 'Buh Bye ' + (this as any).name
     }
   }
 
-  describe('when calling punch with one argument', function () {
-    let F2 = function(this: any, val: string) {
+  describe('when calling mixin with one argument', function () {
+    const F2 = function (this: any, val: string) {
       this.name = val
     }
     Riveter.init(F2);
-    (F2 as any).punch(mixinA)
-    let f2 = new F2('Who')
+    (F2 as any).mixin(mixinA)
+    const f2 = new F2('Who')
 
     it('should apply mixin method to the instance', function () {
       expect(f2).to.have.property('greet')
@@ -43,17 +43,16 @@ describe('riveter - constructor.punch', function () {
       expect(Object.prototype.hasOwnProperty.call(F2, 'extend')).to.be(true)
       expect(Object.prototype.hasOwnProperty.call(F2, 'inherits')).to.be(true)
       expect(Object.prototype.hasOwnProperty.call(F2, 'compose')).to.be(true)
-      expect(Object.prototype.hasOwnProperty.call(F2, 'punch')).to.be(true)
     })
   })
 
-  describe('when calling punch with two arguments', function () {
-    let F2 = function (this: any, val: string) {
+  describe('when calling mixin with two arguments', function () {
+    const F2 = function (this: any, val: string) {
       this.name = val
     }
     Riveter.init(F2);
-    (F2 as any).punch(mixinA, mixinC)
-    let f2 = new F2('Who')
+    (F2 as any).mixin(mixinA, mixinC)
+    const f2 = new F2('Who')
 
     it('should apply mixin methods to the instance', function () {
       expect(f2).to.have.property('greet')
@@ -70,23 +69,22 @@ describe('riveter - constructor.punch', function () {
       expect(Object.prototype.hasOwnProperty.call(F2, 'extend')).to.be(true)
       expect(Object.prototype.hasOwnProperty.call(F2, 'inherits')).to.be(true)
       expect(Object.prototype.hasOwnProperty.call(F2, 'compose')).to.be(true)
-      expect(Object.prototype.hasOwnProperty.call(F2, 'punch')).to.be(true)
     })
   })
 
   describe('when mixin methods collide with prototype methods', function () {
-    let F2 = function (this: any, val: string) {
+    const F2 = function (this: any, val: string) {
       this.name = val
     }
     F2.prototype.greet = function () {
       return 'Hello ' + this.name
     }
     Riveter.init(F2);
-    (F2 as any).punch(mixinA)
-    let f2 = new F2('Who')
+    (F2 as any).mixin(mixinA)
+    const f2 = new F2('Who')
 
-    it('mix-in should override prototype', function () {
-      expect(f2.greet()).to.be('Oh, hai Who')
+    it('mix-in should **not** patch prototype', function () {
+      expect(f2.greet()).to.be('Hello Who')
     })
 
     it('should apply shared/constructor methods', function () {
@@ -94,17 +92,16 @@ describe('riveter - constructor.punch', function () {
       expect(Object.prototype.hasOwnProperty.call(F2, 'extend')).to.be(true)
       expect(Object.prototype.hasOwnProperty.call(F2, 'inherits')).to.be(true)
       expect(Object.prototype.hasOwnProperty.call(F2, 'compose')).to.be(true)
-      expect(Object.prototype.hasOwnProperty.call(F2, 'punch')).to.be(true)
     })
   })
 
   describe('when mixin methods collide with other mixin methods', function () {
-    let F2 = function (this: any, val: string) {
+    const F2 = function (this: any, val: string) {
       this.name = val
     }
     Riveter.init(F2);
-    (F2 as any).punch(mixinB, mixinA)
-    let f2 = new F2('Who')
+    (F2 as any).mixin(mixinB, mixinA)
+    const f2 = new F2('Who')
     it('should apply mixin method to the instance', function () {
       expect(f2).to.have.property('greet')
     })
@@ -117,7 +114,6 @@ describe('riveter - constructor.punch', function () {
       expect(Object.prototype.hasOwnProperty.call(F2, 'extend')).to.be(true)
       expect(Object.prototype.hasOwnProperty.call(F2, 'inherits')).to.be(true)
       expect(Object.prototype.hasOwnProperty.call(F2, 'compose')).to.be(true)
-      expect(Object.prototype.hasOwnProperty.call(F2, 'punch')).to.be(true)
     })
   })
 })
