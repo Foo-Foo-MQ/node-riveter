@@ -52,12 +52,12 @@ class Riveter {
     }
   }
 
-  public static inherits(child: any, parent: any, ctorProps: any, options: any) {
+  public static inherits(child: any, parent: any, ctorProps?: any, options?: any) {
     options = options || {}
     let childProto
     const TmpCtor = function () { }
-    let Child = function (this: any) {
-      (parent as any).apply(this, arguments);
+    let Child: any = function (this: any) {
+      parent.apply(this, arguments);
     }
     if (typeof child === 'object') {
       if (Object.prototype.hasOwnProperty.call(child, 'constructor')) {
@@ -75,7 +75,7 @@ class Riveter {
       _.defaults(Child, parent, ctorProps)
     }
     TmpCtor.prototype = parent.prototype
-    Child.prototype = new (TmpCtor as any)()
+    Child.prototype = new TmpCtor();
     if (options.deep) {
       deepExtend(Child.prototype, childProto, {
         constructor: Child
@@ -85,9 +85,9 @@ class Riveter {
         constructor: Child
       })
     }
-    (Child as any).__super = parent;
+    Child.__super = parent
     // Next line is all about Backbone compatibility
-    (Child as any).__super__ = parent.prototype
+    Child.__super__ = parent.prototype
     return Child
   }
 

@@ -39,11 +39,11 @@ describe('riveter - constructor.compose', function () {
   }
 
   describe('when calling compose with one argument', function () {
-    const F = function (this: any, val: string) {
+    const F: any = function (this: any, val: string) {
       this.name = val
     }
     Riveter.init(F);
-    const F2 = (F as any).compose(mixinA)
+    const F2 = F.compose(mixinA)
     const f2 = new F2('Who')
 
     it('should apply compose method to the instance', function () {
@@ -63,11 +63,11 @@ describe('riveter - constructor.compose', function () {
   })
 
   describe('when calling compose with two arguments', function () {
-    const F = function (this: any, val: string) {
+    const F: any = function (this: any, val: string) {
       this.name = val
     }
     Riveter.init(F)
-    const F2 = (F as any).compose(mixinA, mixinC)
+    const F2 = F.compose(mixinA, mixinC)
     const f2 = new F2('Who')
 
     it('should apply compose methods to the instance', function () {
@@ -89,11 +89,11 @@ describe('riveter - constructor.compose', function () {
   })
 
   describe('when composing a mixin containing a postInit method', function () {
-    const F = function (this: any, val: string) {
+    const F: any = function (this: any, val: string) {
       this.name = val
     }
     Riveter.init(F)
-    const F2 = (F as any).compose(mixinB)
+    const F2 = F.compose(mixinB)
     const f2 = new F2('Who')
     it('should apply mixin method to the instance', function () {
       expect(f2).to.have.property('saySomething')
@@ -114,11 +114,11 @@ describe('riveter - constructor.compose', function () {
   })
 
   describe('when composin a mixin containing a preInit method', function () {
-    var F = function (this: any, val: string) {
+    var F: any = function (this: any, val: string) {
       this.name = val
     }
     Riveter.init(F)
-    const F2 = (F as any).compose(mixinD)
+    const F2 = F.compose(mixinD)
     const f2 = new F2('Who')
     it('should apply mixin method to the instance', function () {
       expect(f2).to.have.property('saySomething')
@@ -139,14 +139,14 @@ describe('riveter - constructor.compose', function () {
   })
 
   describe('when compose-mixins methods collide with prototype methods', function () {
-    const F = function (this: any, val: string) {
+    const F: any = function (this: any, val: string) {
       this.name = val
     }
     F.prototype.greet = function () {
       return 'Hello ' + this.name
     }
     Riveter.init(F)
-    const F2 = (F as any).compose(mixinA)
+    const F2 = F.compose(mixinA)
     const f2 = new F2('Who')
 
     it('mix-in should **not** patch prototype', function () {
@@ -162,11 +162,11 @@ describe('riveter - constructor.compose', function () {
   })
 
   describe('when compose-mixins methods collide with other compose-mixin methods', function () {
-    const F = function (this: any, val: string) {
+    const F: any = function (this: any, val: string) {
       this.name = val
     }
     Riveter.init(F)
-    const F2 = (F as any).compose(mixinB, mixinD)
+    const F2 = F.compose(mixinB, mixinD)
     const f2 = new F2('Who')
     it('should apply mixin method to the instance', function () {
       expect(f2).to.have.property('saySomething')

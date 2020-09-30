@@ -23,11 +23,11 @@ describe('riveter - constructor.punch', function () {
   }
 
   describe('when calling punch with one argument', function () {
-    let F2 = function(this: any, val: string) {
+    let F2: any = function(this: any, val: string) {
       this.name = val
     }
     Riveter.init(F2);
-    (F2 as any).punch(mixinA)
+    F2.punch(mixinA)
     let f2 = new F2('Who')
 
     it('should apply mixin method to the instance', function () {
@@ -48,11 +48,11 @@ describe('riveter - constructor.punch', function () {
   })
 
   describe('when calling punch with two arguments', function () {
-    let F2 = function (this: any, val: string) {
+    let F2: any = function (this: any, val: string) {
       this.name = val
     }
     Riveter.init(F2);
-    (F2 as any).punch(mixinA, mixinC)
+    F2.punch(mixinA, mixinC)
     let f2 = new F2('Who')
 
     it('should apply mixin methods to the instance', function () {
@@ -75,14 +75,14 @@ describe('riveter - constructor.punch', function () {
   })
 
   describe('when mixin methods collide with prototype methods', function () {
-    let F2 = function (this: any, val: string) {
+    let F2: any = function (this: any, val: string) {
       this.name = val
     }
     F2.prototype.greet = function () {
       return 'Hello ' + this.name
     }
     Riveter.init(F2);
-    (F2 as any).punch(mixinA)
+    F2.punch(mixinA)
     let f2 = new F2('Who')
 
     it('mix-in should override prototype', function () {
@@ -99,11 +99,11 @@ describe('riveter - constructor.punch', function () {
   })
 
   describe('when mixin methods collide with other mixin methods', function () {
-    let F2 = function (this: any, val: string) {
+    let F2: any = function (this: any, val: string) {
       this.name = val
     }
     Riveter.init(F2);
-    (F2 as any).punch(mixinB, mixinA)
+    F2.punch(mixinB, mixinA)
     let f2 = new F2('Who')
     it('should apply mixin method to the instance', function () {
       expect(f2).to.have.property('greet')

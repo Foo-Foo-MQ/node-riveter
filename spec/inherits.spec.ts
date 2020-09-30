@@ -1,57 +1,58 @@
-/* global describe it beforeEach */
+/* global describe it beforeEach afterEach */
 
 import Riveter from '../lib/riveter'
 import expect = require('expect.js');
-const _ = require('lodash')
 
-describe('riveter - constructor.extend', function () {
-  const Person: any = function (this: any, name: string) {
+describe('riveter - constructor.inherits', function () {
+  let whichCtor: any[] = []
+
+  const Person = function (this: any, name: string) {
     this.name = name
-    this.initialize.apply(this, arguments)
+    whichCtor.push('Person')
+  }
+  Person.prototype.greet = function (this: any) {
+    return 'Hi, ' + this.name
   }
 
-  _.extend(Person.prototype, {
-    greet: function () {
-      return 'Hi, ' + this.name
-    },
-    initialize: function () {}
-  })
+  const Employee: any = function (this: any, name: string, title: string, salary: number) {
+    Employee.__super.call(this, name)
+    this.title = title
+    this.salary = salary
+    whichCtor.push('Employee')
+  }
 
-  Riveter.init(Person);
+  Employee.prototype.giveRaise = function (this: any, amount: number) {
+    this.salary += amount
+  }
 
-  const Employee = Person.extend(
-    {
-      giveRaise: function (amount) {
-        this.salary += amount
-      },
-      initialize: function (name, title, salary) {
-        this.title = title
-        this.salary = salary
-      }
-    },
-    {
-      getInstance: function (name, title, salary) {
-        return new Employee(name, title, salary)
-      }
-    }
-  )
+  const CEO: any = function (this: any, name: string, title: string, salary: number, shouldExpectFbiRaid: boolean) {
+    CEO.__super.call(this, name, title, salary)
+    this.shouldExpectFbiRaid = shouldExpectFbiRaid
+    whichCtor.push('CEO')
+  }
 
-  const CEO = Employee.extend({
-    constructor: function (name, title, salary, shouldExpectFbiRaid) {
-      CEO.__super.call(this, name, title, salary)
-      this.shouldExpectFbiRaid = shouldExpectFbiRaid
-    },
-    fireAllThePeeps: function () {
-      return "YOU'RE ALL FIRED!"
+  CEO.prototype.fireAllThePeeps = function () {
+    return "YOU'RE ALL FIRED!"
+  }
+
+  Riveter.init(Person, Employee, CEO);
+
+  Employee.inherits(Person, {
+    getInstance: function (name, title, salary) {
+      return new Employee(name, title, salary);
     }
   })
+  CEO.inherits(Employee)
 
-  describe('when calling extend with no overridden constructor', function () {
-    let worker
+  describe('when inheriting and passing shared members', function () {
+    let worker: any
     beforeEach(function () {
       worker = new Employee('Bugs', 'Bunny', 100000)
     })
-    it('should produce a new constructor function', function () {
+    afterEach(function () {
+      whichCtor = []
+    })
+    it('should mutate the child constructor function', function () {
       expect(Employee !== Person).to.be(true)
       expect(Employee.prototype.constructor).to.be(Employee)
       expect(Employee.__super.prototype).to.be(Person.prototype)
@@ -75,8 +76,11 @@ describe('riveter - constructor.extend', function () {
         Object.prototype.hasOwnProperty.call(Employee, 'getInstance')
       ).to.be(true)
       expect(
-        Employee.getInstance('Test', 'Tester', 100) instanceof Employee
+          Employee.getInstance('Test', 'Tester', 100) instanceof Employee
       ).to.be(true)
+    })
+    it('should call the child constructor', function () {
+      expect(whichCtor).to.eql(['Person', 'Employee'])
     })
     it('should produce expected instance when used to instantiate new object', function () {
       expect(worker.name).to.be('Bugs')
@@ -97,28 +101,33 @@ describe('riveter - constructor.extend', function () {
     })
   })
 
-  describe('when calling extend with an overridden constructor', function () {
-    let ceo
+  describe('when inheriting more than 1 level deep (sad panda)', function () {
+    let ceo: any
     beforeEach(function () {
       ceo = new CEO('Byron Whitefield', 'CEO', 1000000000, true)
     })
-    it('should produce a new constructor function', function () {
+    afterEach(function () {
+      whichCtor = []
+    })
+
+    it('should mutate the child constructor function', function () {
+      expect(CEO !== Person).to.be(true)
       expect(CEO !== Employee).to.be(true)
       expect(CEO.__super.prototype).to.be(Employee.prototype)
       expect(CEO.__super).to.be(Employee)
       expect(CEO.__super__).to.be(Employee.prototype)
+      expect(Employee.__super.prototype).to.be(Person.prototype)
+      expect(Employee.__super).to.be(Person)
+      expect(Employee.__super__).to.be(Person.prototype)
     })
-    it('should apply shared/constructor methods', function () {
+    it('should apply shared members', function () {
       expect(Object.prototype.hasOwnProperty.call(CEO, 'mixin')).to.be(true)
       expect(Object.prototype.hasOwnProperty.call(CEO, 'extend')).to.be(true)
       expect(Object.prototype.hasOwnProperty.call(CEO, 'inherits')).to.be(true)
       expect(Object.prototype.hasOwnProperty.call(CEO, 'compose')).to.be(true)
-      expect(Object.prototype.hasOwnProperty.call(CEO, 'getInstance')).to.be(
-        true
-      )
-      expect(CEO.getInstance('Test', 'Tester', 100) instanceof Employee).to.be(
-        true
-      )
+    })
+    it('should call the child constructor', function () {
+      expect(whichCtor).to.eql(['Person', 'Employee', 'CEO'])
     })
     it('should produce expected instance when used to instantiate new object', function () {
       expect(ceo.name).to.be('Byron Whitefield')
@@ -131,13 +140,13 @@ describe('riveter - constructor.extend', function () {
       expect(Object.prototype.hasOwnProperty.call(ceo, 'name')).to.be(true)
       expect(Object.prototype.hasOwnProperty.call(ceo, 'title')).to.be(true)
       expect(Object.prototype.hasOwnProperty.call(ceo, 'salary')).to.be(true)
-      expect(
-        Object.prototype.hasOwnProperty.call(ceo, 'shouldExpectFbiRaid')
-      ).to.be(true)
       expect(Object.prototype.hasOwnProperty.call(ceo, 'giveRaise')).to.be(
         false
       )
       expect(Object.prototype.hasOwnProperty.call(ceo, 'greet')).to.be(false)
+      expect(
+        Object.prototype.hasOwnProperty.call(ceo, 'shouldExpectFbiRaid')
+      ).to.be(true)
       expect(ceo.greet).to.be(Person.prototype.greet)
       expect(ceo.giveRaise).to.be(Employee.prototype.giveRaise)
     })
