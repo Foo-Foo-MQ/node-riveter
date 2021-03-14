@@ -9,3 +9,4 @@ bower/*
 report/*
 coverage
 .nyc_output
+dist/
