@@ -58,7 +58,7 @@
   },
   "main": "lib/riveter.js",
   "engines": {
-    "node": ">=10 <=15"
+    "node": ">=10 <=16"
   },
   "dependencies": {
     "lodash": "^4.17.20"
