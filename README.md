@@ -1,7 +1,7 @@
 # node-riveter
 
-[![Build Status](https://travis-ci.com/Foo-Foo-MQ/node-riveter.svg?branch=master)](https://travis-ci.com/Foo-Foo-MQ/node-riveter)
-[![Coverage Status](https://coveralls.io/repos/github/Foo-Foo-MQ/node-riveter/badge.svg?branch=master)](https://coveralls.io/github/Foo-Foo-MQ/node-riveter?branch=master)
+[![Build Status](https://travis-ci.com/Foo-Foo-MQ/node-riveter.svg?branch=main)](https://travis-ci.com/Foo-Foo-MQ/node-riveter)
+[![Coverage Status](https://coveralls.io/repos/github/Foo-Foo-MQ/node-riveter/badge.svg?branch=main)](https://coveralls.io/github/Foo-Foo-MQ/node-riveter?branch=main)
 
 ### Installation
 
